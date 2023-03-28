@@ -225,13 +225,15 @@ public class PeliculaDAO
 
             String sql = SQL_ADD + "('"
                     + bean.getTitulo() + "', '"
-                    + bean.getPrecio() + "', '"
-                    + bean.getDuracion() + "', '"
+                    + bean.getTematica() + "', '"
                     + bean.getTrailer() + "', '"
-                    + bean.getSinopsis() + "', '"
-                    + bean.getnVotos() + "', '"
-                    + bean.getsPuntuacion() + "', '"
-                    + bean.getFechaEstreno() + "');";
+                    + bean.getAnio()+ "', '"
+                    + bean.getAnio() + "', '"
+                    + bean.getEdadRecomendada() + "', '"
+                    + bean.getButacasLibres()+ "', '"
+                    + bean.getButacasOcupadas()+ "', '"
+                    + bean.getCalificacion()+ "', '"
+                    + bean.getVecesPuntuado()+ "');";
 
 //                    + bean.getsPuntuacion() + "',"
 //                    + "CURRENT_DATE)";
@@ -287,39 +289,38 @@ public class PeliculaDAO
             } else {
 
                 sql = SQL_UPDATE;
+                if (bean.getIdPelicula() != 0) {
+                    sql += "AND idPelicula='" + bean.getIdPelicula() + "'";
+                }
                 if (bean.getTitulo() != null) {
-                    sql += "TITULO='" + bean.getTitulo() + "'";
+                    sql += "AND titulo='" + bean.getTitulo() + "'";
                 }
-
-                if (bean.getPrecio() != null) {
-                    sql += "PRECIO='" + bean.getPrecio() + "'";
+                if (bean.getTematica() != null) {
+                    sql += "AND tematica='" + bean.getTematica() + "'";
                 }
-
-                if (bean.getDuracion() > 0) {
-                    sql += "DURACION='" + bean.getDuracion() + "'";
-                }
-
                 if (bean.getTrailer() != null) {
-                    sql += "TRAILER='" + bean.getTrailer() + "', ";
+                    sql += "AND trailer='" + bean.getTrailer() + "'";
+                }
+                if (bean.getAnio() != 0) {
+                    sql += "AND anio='" + bean.getAnio() + "'";
+                }
+                if (bean.getEdadRecomendada() != 0) {
+                    sql += "AND edadRecomendada='" + bean.getEdadRecomendada() + "'";
+                }
+                if (bean.getButacasLibres() != 0) {
+                    sql += "AND butacasLibres='" + bean.getButacasLibres() + "'";
+                }
+                if (bean.getButacasOcupadas() != 0) {
+                    sql += "AND butacasOcupadas='" + bean.getButacasOcupadas() + "'";
+                }
+                if (bean.getCalificacion() != 0) {
+                    sql += "AND calificacion='" + bean.getCalificacion() + "'";
+                }
+                if (bean.getVecesPuntuado() != 0) {
+                    sql += "AND vecesPuntuado='" + bean.getVecesPuntuado() + "'";
                 }
 
-                if (bean.getSinopsis() != null) {
-                    sql += "SIPNOSIS='" + bean.getSinopsis() + "'";
-                }
-
-                if (bean.getnVotos() > 0) {
-                    sql += "N_Votos='" + bean.getnVotos() + "'";
-                }
-
-                if (bean.getsPuntuacion() > 0) {
-                    sql += "S_Puntuacion='" + bean.getsPuntuacion() + "'";
-                }
-
-                if (bean.getFechaEstreno() != null) {
-                    sql += "Fecha_Estreno='" + bean.getFechaEstreno() + "'";
-                }
-
-                sql += " WHERE `ID_Pelicula`=" + bean.getId() + ";";
+                sql += " WHERE `ID_Pelicula`=" + bean.getIdPelicula() + ";";
                 System.out.println(sql);
                 resp = motorSql.execute(sql);
             }

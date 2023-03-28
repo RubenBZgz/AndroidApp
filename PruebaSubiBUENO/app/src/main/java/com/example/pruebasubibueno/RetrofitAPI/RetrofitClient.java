@@ -1,4 +1,4 @@
-package com.example.pruebasubibueno;
+package com.example.pruebasubibueno.RetrofitAPI;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

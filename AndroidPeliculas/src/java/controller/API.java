@@ -14,6 +14,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import model.Pelicula;
 
@@ -70,10 +71,10 @@ public class API {
     }
     
     @GET
-    @Path("/filtradoTitulo")
+    @Path("/filtradoTitulo/{titulo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String filtro (String titulo) {
+    public String filtradoTitulo (@PathParam("titulo") String titulo) {
         PeliculaDAO peliculaDAO = new PeliculaDAO();
         ArrayList<Pelicula> peliculas = peliculaDAO.filtradoTitulo(titulo);
         return Pelicula.toArrayJSon(peliculas);
@@ -89,6 +90,7 @@ public class API {
         return Pelicula.toArrayJSon(peliculas);
     }   
 
+    
     /**
      * PUT method for updating or creating an instance of API
      * @param content representation for the resource
