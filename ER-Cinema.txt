@@ -1,0 +1,155 @@
+******TABLAS******
+
+CREATE TABLE cine (
+	idCine INT(4),
+	nombre VARCHAR(40),
+	direccion VARCHAR(40),
+	capacidad INT(4),
+CONSTRAINT PK_cine PRIMARY KEY (idCine)
+);
+
+CREATE TABLE pelicula (
+	idPelicula INT(4),
+	titulo VARCHAR(40),
+	sinopsis VARCHAR(100),
+	categoria VARCHAR(20),
+	caracteristicas VARCHAR(40),
+	trailer VARCHAR(100),
+	edadRecomendada INT(2),
+	historicoEntradas INT(5),
+	butacasLibre INT(4),
+	butacasOcupadas INT(4),
+	duracion INT(4),
+	rating DECIMAL(4,2),
+CONSTRAINT PK_pelicula PRIMARY KEY (idPelicula)
+);
+
+CREATE TABLE usuario (
+	idUsuario INT(4),
+	nombre VARCHAR(40),
+	apellido VARCHAR(40),
+	correo VARCHAR(40),
+	contrasena VARCHAR(40),
+CONSTRAINT PK_usuario PRIMARY KEY (idUsuario)
+);
+
+CREATE TABLE entrada (
+	idEntrada INT(4),
+	descripcion VARCHAR(40),
+	horario VARCHAR(5),
+	precio DECIMAL(4,2),
+	idUsuario INT(4),
+	idPelicula INT(4),
+CONSTRAINT PK_entrada PRIMARY KEY (idEntrada),
+CONSTRAINT FK_entrada_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
+CONSTRAINT FK_entrada_peli FOREIGN KEY (idPelicula) REFERENCES pelicula(idPelicula)
+);
+
+CREATE TABLE contener (
+	idCine INT(4),
+	idPelicula INT(4),
+CONSTRAINT FK_contener_cine FOREIGN KEY (idCine) REFERENCES cine(idCine),
+CONSTRAINT FK_contener_pelicula FOREIGN KEY (idPelicula) REFERENCES pelicula(idPelicula)
+);
+
+******INSERTS******
+
+INSERT INTO cine VALUES (1, "Cinesa", "Puerto Venecia, Av. de Puerto Venecia, 3, 50021 Zaragoza", 2200);
+INSERT INTO cine VALUES (2, "Aragonia", "Cines Aragonia, Av. de Juan Pablo II, 43, 50009 Zaragoza", 3300);
+INSERT INTO cine VALUES (3, "Palafox", "Cines Palafox, P.º de la Independencia, 12, 50004 Zaragoza", 2768);
+
+INSERT INTO pelicula (idPelicula, titulo, sinopsis, categoria, caracteristicas, trailer, edadRecomendada, butacasLibre, butacasOcupadas, duracion) VALUES 
+(1, 'El señor de los anillos: La comunidad del anillo', 'Un hobbit llamado Frodo Bolsón hereda de su tío el anillo único, un arma de poder inimaginable', 'Aventuras', 'V.O. subtitulada, 2D', 'https://www.youtube.com/watch?v=V75dMMIW2B4', 12, 100, 0, 178, 9.5),
+(2, 'Harry Potter y la Piedra Filosofal', 'Un niño aprende que es un mago y se une a una escuela de magia, donde se enfrenta a un malvado mago y sus secuaces', 'Fantasía', 'Doblada al español, 2D', 'https://www.youtube.com/watch?v=VyHV0BRtdxo', 7, 150, 0, 152,8.2),
+(3, 'Titanic', 'Una historia de amor entre dos pasajeros a bordo del Titanic, que choca con un iceberg y se hunde en el Atlántico', 'Drama', 'V.O. subtitulada, 2D', 'https://www.youtube.com/watch?v=2e-eXJ6HgkQ', 13, 80, 0, 194,7),
+(4, 'La La Land', 'Un pianista de jazz y una aspirante a actriz se enamoran mientras persiguen sus sueños en Los Ángeles', 'Musical', 'Doblada al español, 2D', 'https://www.youtube.com/watch?v=0pdqf4P9MB8', 7, 120, 0, 128,6.3),
+(5, 'El Padrino', 'La historia de la familia Corleone, una de las más poderosas de la mafia en Nueva York', 'Drama', 'V.O. subtitulada, 2D', 'https://www.youtube.com/watch?v=sY1S34973zA', 18, 70, 0, 175,5.4),
+(6, 'Cadena Perpetua', 'Dos hombres encarcelados establecen una amistad a lo largo de los años, encontrando consuelo y redención a través de actos de decencia común.', 'Drama', 'Director: Frank Darabont; Reparto: Tim Robbins, Morgan Freeman, Bob Gunton', 'https://www.youtube.com/watch?v=6hB3S9bIaco', 16, 200, 0, 142, 2.3),
+(7, 'El Caballero de la Noche', 'Cuando la amenaza conocida como el Joker surge de su misterioso pasado, causa estragos y caos en las personas de Gotham. El Caballero de la Noche debe aceptar una de las pruebas más difíciles de su vida para luchar contra la injusticia.', 'Acción', 'Director: Christopher Nolan; Reparto: Christian Bale, Heath Ledger, Aaron Eckhart', 'https://www.youtube.com/watch?v=yrJL5JxEYIw', 16, 180, 0, 152, 4.6),
+(8, 'Sueño de Fuga', 'Dos hombres encarcelados desarrollan una amistad a lo largo de varios años, encontrando consuelo y eventual redención a través de actos de decencia común.', 'Drama', 'Director: Frank Darabont; Reparto: Tim Robbins, Morgan Freeman, Bob Gunton', 'https://www.youtube.com/watch?v=6hB3S9bIaco', 16, 200, 0, 142, 8.5),
+(9, 'El Padrino II', 'La vida temprana y carrera del patriarca Vito Corleone en la década de 1920 de Nueva York se retrata mientras sigue a su hijo Michael como jefe de la familia Corleone.', 'Crimen', 'Director: Francis Ford Coppola; Reparto: Al Pacino, Robert De Niro, Robert Duvall', 'https://www.youtube.com/watch?v=qJr92K_hKl0', 18, 300, 0, 202, 3.9),
+(10, 'El Padrino: Parte III', 'En la tercera entrega de la saga, un envejecido Michael Corleone intenta legitimar sus negocios, pero se ve envuelto en una serie de traiciones y conflictos.', 'Crimen', 'Director: Francis Ford Coppola; Estrellas: Al Pacino, Diane Keaton, Andy Garcia', 'https://www.youtube.com/watch?v=z8h3LVb8cl8', 16, 200, 0, 162, 4.7),
+(11, 'Forrest Gump', 'Un hombre simple con un corazón puro viaja a través de la historia estadounidense, con encuentros memorables con figuras influyentes y eventos históricos.', 'Comedia dramática', 'Director: Robert Zemeckis; Estrellas: Tom Hanks, Robin Wright, Gary Sinise', 'https://www.youtube.com/watch?v=8dcYw4OwCA0', 12, 200, 0, 142, 8),
+(12, 'El Club de la Pelea', 'Un hombre aburrido y descontento descubre un nuevo sentido de propósito en la violencia organizada.', 'Drama', 'Director: David Fincher; Protagonistas: Brad Pitt, Edward Norton, Helena Bonham Carter', 'https://www.youtube.com/watch?v=_XgQA9Ab0Gw', 18, 220, 30, 139),
+(13, 'Pulp Fiction', 'La vida de dos mafiosos, un boxeador, un gánster y la esposa de un gánster se entrelazan en una serie de historias que van desde lo absurdo hasta lo peligroso.', 'Crimen', 'Director: Quentin Tarantino; Reparto: John Travolta, Uma Thurman, Samuel L. Jackson', 'https://www.youtube.com/watch?v=s7EdQ4FqbhY', 18, 220, 30, 154, 1),
+(14, 'El gran Lebowski', 'Jeff Lebowski, conocido como "El Nota", se ve envuelto en una trama hilarante de intriga y engaño después de ser confundido con otro hombre con el mismo nombre.', 'Comedia', 'Director: Joel Coen; Reparto: Jeff Bridges, John Goodman, Julianne Moore', 'https://www.youtube.com/watch?v=cd-go0oBF4Y', 16, 190, 10, 117, 2.3),
+(15, 'El lobo de Wall Street', 'Un corredor de bolsa de Nueva York se niega a cooperar en un caso de fraude de valores, lo que lo lleva a la ruina.', 'Drama', 'Director: Martin Scorsese; Reparto: Leonardo DiCaprio, Jonah Hill, Margot Robbie', 'https://www.youtube.com/watch?v=iszwuX1AK6A', 18, 180, 20, 180, 3.3),
+(16, 'Blade Runner 2049', 'Un joven blade runner descubre un secreto enterrado hace mucho tiempo que lo lleva a rastrear al antiguo blade runner Rick Deckard, quien ha estado desaparecido durante 30 años.', 'Ciencia ficción', 'Director: Denis Villeneuve; Reparto: Ryan Gosling, Harrison Ford, Ana de Armas', 'https://www.youtube.com/watch?v=haXvp8M9Cog', 16, 150, 50, 163, 6.6),
+(17, 'El renacido', 'Un cazador de pieles de la década de 1820 lucha por sobrevivir después de ser atacado por un oso y dejado por muerto por miembros de su propio equipo de caza.', 'Aventuras', 'Director: Alejandro G. Iñárritu; Reparto: Leonardo DiCaprio, Tom Hardy, Domhnall Gleeson', 'https://www.youtube.com/watch?v=QRfj1VCg16Y', 18, 180, 20, 157, 7.7),
+(18, 'La red social', 'La historia de la creación de Facebook.', 'Drama', 'Director: David Fincher; Reparto: Jesse Eisenberg, Andrew Garfield, Justin Timberlake', 'https://www.youtube.com/watch?v=lB95KLmpLR4', 16, 190, 10, 120, 8.8),
+(19, 'La vida de Pi', 'Un joven indio se encuentra a la deriva en un bote salvavidas con un tigre de Bengala después de que su barco se hunda en el océano Pacífico.', 'Aventuras', 'Director: Ang Lee; Reparto: Suraj Sharma, Irrfan Khan, Adil Hussain', 'https://www.youtube.com/watch?v=mZEZ35Fhvuc', 12, 140, 60, 127, 9.9),
+(20, 'El silencio de los corderos', 'Un joven agente del FBI busca la ayuda de un asesino en serie encarcelado para capturar a otro asesino en serie que está en libertad.', 'Crimen', 'Director: Jonathan Demme; Reparto: Jodie Foster, Anthony Hopkins, Lawrence A. Bonney', 'https://www.youtube.com/watch?v=mDKn4VL8o10' , 18, 300, 0, 118, 6.5);
+
+INSERT INTO usuario (idUsuario, nombre, apellido, correo, contrasena) VALUES 
+(1, 'Juan', 'Perez', 'juan.perez@gmail.com', 'contrasena1'),
+(2, 'Maria', 'Gonzalez', 'maria.gonzalez@gmail.com', 'contrasena2'),
+(3, 'Luis', 'Martinez', 'luis.martinez@gmail.com', 'contrasena3'),
+(4, 'Ana', 'Rodriguez', 'ana.rodriguez@gmail.com', 'contrasena4'),
+(5, 'Pedro', 'Sanchez', 'pedro.sanchez@gmail.com', 'contrasena5'),
+(6, 'Carla', 'Gomez', 'carla.gomez@gmail.com', 'contrasena6'),
+(7, 'Javier', 'Fernandez', 'javier.fernandez@gmail.com', 'contrasena7'),
+(8, 'Laura', 'Hernandez', 'laura.hernandez@gmail.com', 'contrasena8'),
+(9, 'Miguel', 'Alvarez', 'miguel.alvarez@gmail.com', 'contrasena9'),
+(10, 'Cristina', 'Martínez', 'cristinamartinez@example.com', 'contraseña10');
+
+INSERT INTO entrada (idEntrada, descripcion, horario, precio, idUsuario, idPelicula) VALUES 
+(1, 'El señor de los anillos: La comunidad del anillo', '16:30', 8.50, 1, 1),
+(2, 'El señor de los anillos: La comunidad del anillo', '19:45', 10.50, 2, 1),
+(3, 'Harry Potter y la Piedra Filosofal', '15:15', 9.75, 3, 2),
+(4, 'Harry Potter y la Piedra Filosofal', '18:30', 11.00, 4, 2),
+(5, 'Titanic', '20:00', 10.25, 5, 3),
+(6, 'La La Land', '16:00', 9.50, 6, 4),
+(7, 'La La Land', '21:15', 11.75, 7, 4),
+(8, 'El Padrino', '20:30', 10.00, 8, 5),
+(9, 'Cadena Perpetua', '17:45', 9.25, 9, 6),
+(10, 'El Caballero de la Noche', '21:00', 11.50, 10, 7),
+(11, 'El Padrino II', '18:15', 9.75, 1, 9),
+(12, 'El Padrino: Parte III', '21:30', 11.00, 2, 10),
+(13, 'El señor de los anillos: La comunidad del anillo', '16:30', 8.50, 3, 1),
+(14, 'Harry Potter y la Piedra Filosofal', '14:45', 7.50, 4, 2),
+(15, 'Titanic', '20:15', 10.00, 5, 3),
+(16, 'La La Land', '18:00', 8.00, 6, 4),
+(17, 'El Padrino', '22:00', 9.50, 7, 5),
+(18, 'Cadena Perpetua', '15:20', 7.50, 8, 6),
+(19, 'El Caballero de la Noche', '19:30', 10.50, 9, 7),
+(20, 'Sueño de Fuga', '16:00', 8.00, 10, 8),
+(21, 'El Padrino II', '21:15', 9.00, 4, 9),
+(22, 'El Padrino: Parte III', '17:45', 8.50, 5, 10);
+
+INSERT INTO contener VALUES(1,1);
+INSERT INTO contener VALUES(1,2);
+INSERT INTO contener VALUES(1,3);
+INSERT INTO contener VALUES(1,4);
+INSERT INTO contener VALUES(1,5);
+INSERT INTO contener VALUES(1,6);
+INSERT INTO contener VALUES(1,7);
+INSERT INTO contener VALUES(1,8);
+INSERT INTO contener VALUES(1,9);
+INSERT INTO contener VALUES(1,10);
+INSERT INTO contener VALUES(1,11);
+INSERT INTO contener VALUES(1,12);
+INSERT INTO contener VALUES(2,6);
+INSERT INTO contener VALUES(2,7);
+INSERT INTO contener VALUES(2,8);
+INSERT INTO contener VALUES(2,9);
+INSERT INTO contener VALUES(2,10);
+INSERT INTO contener VALUES(2,11);
+INSERT INTO contener VALUES(2,12);
+INSERT INTO contener VALUES(2,13);
+INSERT INTO contener VALUES(2,14);
+INSERT INTO contener VALUES(2,15);
+INSERT INTO contener VALUES(2,16);
+INSERT INTO contener VALUES(2,17);
+INSERT INTO contener VALUES(3,8);
+INSERT INTO contener VALUES(3,9);
+INSERT INTO contener VALUES(3,10);
+INSERT INTO contener VALUES(3,11);
+INSERT INTO contener VALUES(3,12);
+INSERT INTO contener VALUES(3,13);
+INSERT INTO contener VALUES(3,14);
+INSERT INTO contener VALUES(3,15);
+INSERT INTO contener VALUES(3,16);
+INSERT INTO contener VALUES(3,17);
+INSERT INTO contener VALUES(3,18);
+INSERT INTO contener VALUES(3,19);
+INSERT INTO contener VALUES(3,20);

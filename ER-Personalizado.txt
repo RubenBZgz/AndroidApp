@@ -1,0 +1,97 @@
+******TABLAS******
+
+CREATE TABLE cine (
+	idCine INT AUTO_INCREMENT,
+	nombre VARCHAR(40) NOT NULL,
+	capacidad INT(4) NOT NULL,
+CONSTRAINT PK_cine PRIMARY KEY (idCine)
+);
+
+CREATE TABLE pelicula (
+	idPelicula INT AUTO_INCREMENT,
+	titulo VARCHAR(40) NOT NULL,
+	tematica VARCHAR(40) NOT NULL,
+	trailer VARCHAR(200) NOT NULL,
+	anio INT(4) NOT NULL,
+	edadRecomendada INT(2) NOT NULL,
+	butacasLibres INT(4) NOT NULL,
+	butacasOcupadas INT(4) NOT NULL,
+	calificacion DECIMAL(3,2) NOT NULL,
+	vecesPuntuado INT(4) NOT NULL,
+CONSTRAINT PK_pelicula PRIMARY KEY (idPelicula)
+);
+
+CREATE TABLE cPeli(
+	idCine INT(4),
+	idPelicula INT(4),
+CONSTRAINT FK_cPeli_cine FOREIGN KEY (idCine) REFERENCES cine(idCine),
+CONSTRAINT FK_cPeli_pelicula FOREIGN KEY (idPelicula) REFERENCES pelicula(idPelicula)
+);
+
+CREATE TABLE usuario (
+	idUsuario INT AUTO_INCREMENT,
+	nombre VARCHAR(40) NOT NULL,
+	correo VARCHAR(40) NOT NULL,
+	password VARCHAR(40) NOT NULL,
+CONSTRAINT PK_usuario PRIMARY KEY (idUsuario),
+CONSTRAINT UN_usuario_correo UNIQUE (correo)
+);
+
+CREATE TABLE entrada (
+	idEntrada INT AUTO_INCREMENT,
+	precio DECIMAL(4,2) NOT NULL,
+	idUsuario INT(4),
+	idPelicula INT(4),
+CONSTRAINT PK_entrada PRIMARY KEY (idEntrada),
+CONSTRAINT FK_entrada_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
+CONSTRAINT FK_entrada_peli FOREIGN KEY (idPelicula) REFERENCES pelicula(idPelicula)
+);
+
+******INSERTS******
+
+INSERT INTO `cine` (`nombre`, `capacidad`) VALUES ('Cinesa', '2000');
+INSERT INTO `cine` (`nombre`, `capacidad`) VALUES ('Aragonia', '2300');
+INSERT INTO `cine` (`nombre`, `capacidad`) VALUES ('Palafox', '3000');
+
+INSERT INTO `pelicula` (`titulo`, `tematica`, `trailer`, `anio`, `edadRecomendada`, `butacasLibres`, `butacasOcupadas`, `calificacion`, `vecesPuntuado`) VALUES 
+('La forja de un campeon', 'Deportes', 'https://www.youtube.com/watch?v=QL8NpsQiBgA', '2022', '16', '100', '200', '4.2', '100'),
+('Avatar: El sentido del agua', 'Aventura', 'https://www.youtube.com/watch?v=FSyWAxUg3Go', '2022', '12', '46', '564', '4.7', '1330'),
+('Scream', 'Terror', 'https://www.youtube.com/watch?v=LItQuV1bFf4', '2022', '16', '80', '300', '3.9', '221'),
+('Avatar', 'Aventura', 'https://www.youtube.com/watch?v=AZS_d_hS2dM', '2009', '7', '100', '200', '4.2', '783'),
+('El Gato con Botas: El último deseo', 'Animación', 'https://www.youtube.com/watch?v=7afDrYLajRk', '2022', '7', '20', '130', '4.1', '450'),
+('Muere, Hart', 'Acción', 'https://www.youtube.com/watch?v=kAYOmh5Kh2U', '2023', '18', '100', '60', '2.3', '90'),
+('Shark Side of the Moon', 'Acción', 'https://www.youtube.com/watch?v=6DKVDjLKy8g', '2022', '18', '65', '35', '2.7', '87'),
+('Creed III', 'Acción', 'https://www.youtube.com/watch?v=jdEEZeRiyeQ', '2023', '16', '20', '130', '4.2', '260'),
+('Winnie the Pooh: Blood and Honey', 'Horror', 'Winnie the Pooh: Blood and Honey', '2023', '18', '50', '60', '3.6', '143'),
+('La ballena', 'Drama', 'https://www.youtube.com/watch?v=IUezfSnXzEY', '2022', '16', '20', '130', '4.1', '412'),
+('Todo a la vez en todas partes', 'Acción', 'https://www.youtube.com/watch?v=U3cKYWgl2dU', '2022', '16', '20', '130', '4.1', '187'),
+('Shazam', 'Acción', 'https://www.youtube.com/watch?v=B_DpkUSH2Mk', '2019', '', '20', '130', '4.0', '302'),
+('Spider-Man: No Way Home', 'Acción', 'https://www.youtube.com/watch?v=ldMn-1iQzKE', '2021', '12', '20', '130', '4.3', '580'),
+('El niño delfín', 'Animación', 'https://www.youtube.com/watch?v=iYVCk_uJycM', '2022', '6', '20', '130', '4.1', '221'),
+('Jujutsu Kaisen 0', 'Animación', 'https://www.youtube.com/watch?v=Jvaej6rvlIc', '2021', '12', '20', '130', '4.7', '432'),
+('Medieval', 'Historia', 'https://www.youtube.com/watch?v=AmQILSvYajI', '2022', '16', '20', '130', '4.1', '300');
+
+
+
+INSERT INTO `usuario` (`nombre`,`correo`,`password`) VALUES 
+('admin','admin@gmail.com','123'),
+('Ruben','rb@gmail.com','111'),
+('Lolo','lolo@gmail.com','222'),
+('Paco','paco@gmail.com','333');
+
+
+INSERT INTO entrada (`precio`,`idUsuario`,`idPelicula`) VALUES
+('5','2','1'),
+('5','3','3'),
+('5','4','3'),
+('5','4','2');
+
+
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(1,1);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(1,2);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(1,3);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(1,4);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(2,4);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(3,2);
+INSERT INTO `cPeli` (`idCine`,`idPelicula`) VALUES(1,4);
+
