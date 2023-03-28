@@ -4,5 +4,6 @@
     <string name="top10">TOP10</string>
     <string name="findall">findAll</string>
     <string name="titulo">Titulo</string>
-    <string name="filtrar">Filtrar</string>
+    <string name="filtrar_ambas">FILTRAR AMBAS</string>
+    <string name="tematica">TEMATICA</string>
 </resources>

@@ -27,6 +27,10 @@ public class PeliculaDAO
     
     private final String SQL_FILTRADO_TITULO = "SELECT * FROM pelicula WHERE titulo LIKE ";
     
+    private final String SQL_FILTRADO_TEMATICA = "SELECT * FROM pelicula WHERE tematica LIKE ";
+    
+    private final String SQL_FILTRADO_AMBAS = "SELECT * FROM pelicula WHERE titulo LIKE ";
+    
     private final String SQL_HISTORICO = "";
     //SELECT pelicula.titulo FROM pelicula, cpeli WHERE cpeli.idPelicula = pelicula.idPelicula;
     
@@ -204,6 +208,80 @@ public class PeliculaDAO
         return peliculas;
     }
     
+    public ArrayList<Pelicula> filtradoTematica (String titulo) {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        String sql= SQL_FILTRADO_TEMATICA + "'%" + titulo + "%'";
+        try {
+            //1º) 
+            motorSql.connect();
+            sql += ";";
+
+            System.out.println(sql);
+            ResultSet rs = motorSql.executeQuery(sql);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+
+                peliculas.add(pelicula);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
+    public ArrayList<Pelicula> filtradoAmbas (String titulo, String tematica) {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        String sql= SQL_FILTRADO_AMBAS + "'%" + titulo + "%'" + 
+                " AND tematica LIKE " + "'%" + tematica + "%'";
+        System.out.println(sql);
+        try {
+            //1º) 
+            motorSql.connect();
+            sql += ";";
+
+            System.out.println(sql);
+            ResultSet rs = motorSql.executeQuery(sql);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+
+                peliculas.add(pelicula);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
     @Override
     public int add(Pelicula bean) {
         int resp = 0;
@@ -339,7 +417,11 @@ public class PeliculaDAO
         ArrayList lstPeliculas = peliculaDAO.filtradoTitulo("ava");
         System.out.println(lstPeliculas.toString());*/
         
+        /*      FILTRADO TEMATICAS
         ArrayList lstPeliculas = peliculaDAO.tematicas();
+        System.out.println(lstPeliculas.toString());*/
+        
+        ArrayList lstPeliculas = peliculaDAO.filtradoAmbas("Cre", "Acción");
         System.out.println(lstPeliculas.toString());
         
         

@@ -31,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_FUNCTION = "com.example.application.example.EXTRA_FUNCTION";
     public static final String EXTRA_TEXT = "com.example.application.example.EXTRA_TEXT";
+    public static final String EXTRA_TEXT2 = "com.example.application.example.EXTRA_TEXT2";
     private Button findAll;
     private Button top10;
     private Button historico;
     private Button btnFiltrarTitulo;
+    private Button btnFiltrarTematica;
+    private Button btnFiltrarAmbas;
     private Spinner comboDias;
     private ArrayList<String> comboDiasList;
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         comboDias = (Spinner) findViewById(R.id.idSpinnerDias);
 
@@ -56,6 +60,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openActivityFilterPeliculas("filtrarTitulo");
+            }
+        });
+
+        btnFiltrarTematica = (Button) findViewById(R.id.btnFiltrarTematica);
+        btnFiltrarTematica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityFilterPeliculas("filtrarTematica");
+            }
+        });
+
+        btnFiltrarAmbas = (Button) findViewById(R.id.btnFiltrarAmbas);
+        btnFiltrarAmbas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityFilterPeliculas("filtrarAmbas");
             }
         });
 
@@ -93,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 List<String> tematicas = response.body();
                 String[] unaTematica = new String[tematicas.size()];
+                //unaTematica[0] = "Default";
                 for (int i = 0; i < tematicas.size(); i++) {
                     unaTematica[i] = tematicas.get(i);
                 }
@@ -123,11 +144,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivityFilterPeliculas(String metodo) {
-        EditText function = (EditText) findViewById(R.id.filtrarTitulo);
-        String text = function.getText().toString();
+        EditText functionTitulo;
+        Spinner functionTematica;
+        String titulo;
+        String tematica;
+
         Intent intent = new Intent(this, Lst_Peliculas.class);
+        switch (metodo){
+            case "filtrarTitulo":
+                functionTitulo = (EditText) findViewById(R.id.filtrarTitulo);
+                titulo = functionTitulo.getText().toString();
+                intent.putExtra(EXTRA_TEXT, titulo);
+                break;
+            case "filtrarTematica":
+                 functionTematica = (Spinner) findViewById(R.id.idSpinnerDias);
+                 tematica = functionTematica.getSelectedItem().toString();
+                 intent.putExtra(EXTRA_TEXT, tematica);
+                break;
+            case "filtrarAmbas":
+                 functionTitulo = (EditText) findViewById(R.id.filtrarTitulo);
+                 titulo = functionTitulo.getText().toString();
+                 intent.putExtra(EXTRA_TEXT, titulo);
+                 functionTematica = (Spinner) findViewById(R.id.idSpinnerDias);
+                 tematica = functionTematica.getSelectedItem().toString();
+                 intent.putExtra(EXTRA_TEXT2, tematica);
+                break;
+        }
         intent.putExtra(EXTRA_FUNCTION, metodo);
-        intent.putExtra(EXTRA_TEXT, text);
         startActivity(intent);
     }
 }

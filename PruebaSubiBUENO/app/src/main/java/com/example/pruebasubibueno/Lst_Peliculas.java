@@ -27,6 +27,7 @@ public class Lst_Peliculas extends AppCompatActivity {
     TextView function;
     String data = "";
     String nombrePelicula = "";
+    String nombreTematica = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,15 @@ public class Lst_Peliculas extends AppCompatActivity {
         setContentView(R.layout.lst_peliculas);
 
         superListView = findViewById(R.id.superListView);
+
+        /*superListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //fichaTecnica();
+                Toast.makeText(Lst_Peliculas.this, "HAS LLEGADO", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
 
 
 
@@ -53,12 +63,22 @@ public class Lst_Peliculas extends AppCompatActivity {
             case "filtrarTitulo":
                 nombrePelicula = intent.getStringExtra(MainActivity.EXTRA_TEXT);
                 function.setText(nombrePelicula);
-                filtradoTitulo(nombrePelicula);
+                filtrarTitulo(nombrePelicula);
+                break;
+            case "filtrarTematica":
+                nombreTematica = intent.getStringExtra(MainActivity.EXTRA_TEXT);
+                function.setText(nombreTematica);
+                filtrarTematica(nombreTematica);
+                break;
+            case "filtrarAmbas":
+                nombrePelicula = intent.getStringExtra(MainActivity.EXTRA_TEXT);
+                nombreTematica = intent.getStringExtra(MainActivity.EXTRA_TEXT2);
+                function.setText(nombreTematica);
+                filtrarAmbas(nombrePelicula, nombreTematica);
                 break;
         }
 
     }
-
 
     private void findAll() {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findAll();
@@ -105,8 +125,74 @@ public class Lst_Peliculas extends AppCompatActivity {
     }
 
 
-    private void filtradoTitulo(String titulo) {
-        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().filtradoTitulo(titulo);
+    private void filtrarTitulo(String titulo) {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().filtrarTitulo(titulo);
+        call.enqueue(new Callback<List<Peliculas>>() {
+            @Override
+            public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
+                List<Peliculas> peliculas = response.body();
+                String[] unaPelicula = new String[peliculas.size()];
+                for (int i = 0; i < peliculas.size(); i++) {
+                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                }
+                superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
+            }
+
+            @Override
+            public void onFailure(Call<List<Peliculas>> call, Throwable t) {
+                Log.d("Error:", String.valueOf(t));
+                Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void filtrarTematica(String tematica) {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().filtrarTematica(tematica);
+        call.enqueue(new Callback<List<Peliculas>>() {
+            @Override
+            public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
+                List<Peliculas> peliculas = response.body();
+                String[] unaPelicula = new String[peliculas.size()];
+                for (int i = 0; i < peliculas.size(); i++) {
+                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                }
+                superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
+            }
+
+            @Override
+            public void onFailure(Call<List<Peliculas>> call, Throwable t) {
+                Log.d("Error:", String.valueOf(t));
+                Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void filtrarAmbas(String titulo, String tematica) {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().filtrarAmbas(titulo, tematica);
+        call.enqueue(new Callback<List<Peliculas>>() {
+            @Override
+            public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
+                List<Peliculas> peliculas = response.body();
+                String[] unaPelicula = new String[peliculas.size()];
+                for (int i = 0; i < peliculas.size(); i++) {
+                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                }
+                superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
+            }
+
+            @Override
+            public void onFailure(Call<List<Peliculas>> call, Throwable t) {
+                Log.d("Error:", String.valueOf(t));
+                Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void fichaTecnica() {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findAll();
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
             public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {

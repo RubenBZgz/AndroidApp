@@ -73,12 +73,32 @@ public class API {
     }
     
     @GET
-    @Path("/filtradoTitulo/{titulo}")
+    @Path("/filtrarTitulo/{titulo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String filtradoTitulo (@PathParam("titulo") String titulo) {
         PeliculaDAO peliculaDAO = new PeliculaDAO();
         ArrayList<Pelicula> peliculas = peliculaDAO.filtradoTitulo(titulo);
+        return Pelicula.toArrayJSon(peliculas);
+    }
+    
+    @GET
+    @Path("/filtrarTematica/{tematica}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String filtradoTematica (@PathParam("tematica") String tematica) {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<Pelicula> peliculas = peliculaDAO.filtradoTematica(tematica);
+        return Pelicula.toArrayJSon(peliculas);
+    }
+    
+    @GET
+    @Path("/filtrarAmbas/{titulo}/{tematica}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String filtradoTitulo (@PathParam("titulo") String titulo, @PathParam("tematica") String tematica) {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<Pelicula> peliculas = peliculaDAO.filtradoAmbas(titulo, tematica);
         return Pelicula.toArrayJSon(peliculas);
     }
     

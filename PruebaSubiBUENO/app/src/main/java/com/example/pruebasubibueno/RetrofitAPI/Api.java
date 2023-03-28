@@ -16,16 +16,26 @@ public interface Api {
     */
 
     //String BASE_URL = "http://localhost:8080/AndroidPeliculas/webresources/api/";
-    String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
+    //          CLASE
+    //String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
+    //          CASA
+    String BASE_URL = "http://192.168.0.31:8080/AndroidPeliculas/webresources/api/";
     @GET("findAll")
     Call<List<Peliculas>> findAll();
-
-    @GET("filtradoTitulo/{titulo}")
-    Call<List<Peliculas>> filtradoTitulo(@Path("titulo") String titulo);
 
     @GET("top10")
     Call<List<Peliculas>> top10();
 
     @GET("tematicas")
     Call<List<String>> tematicas();
+
+    @GET("filtrarTitulo/{titulo}")
+    Call<List<Peliculas>> filtrarTitulo(@Path("titulo") String titulo);
+
+    @GET("filtrarTematica/{tematica}")
+    Call<List<Peliculas>> filtrarTematica(@Path("tematica") String tematica);
+
+    @GET("filtrarAmbas/{titulo}/{tematica}")
+    Call<List<Peliculas>> filtrarAmbas(@Path("titulo") String titulo, @Path("tematica") String tematica);
+
 }

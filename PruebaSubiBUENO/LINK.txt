@@ -1,1 +1,3 @@
 https://www.section.io/engineering-education/making-api-requests-using-retrofit-android/
+
+https://www.youtube.com/watch?v=Uur6-64KqxI
