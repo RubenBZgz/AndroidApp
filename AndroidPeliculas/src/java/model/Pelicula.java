@@ -10,10 +10,10 @@ public class Pelicula {
     private int idPelicula, anio, edadRecomendada, butacasLibres, butacasOcupadas, calificacion, vecesPuntuado;
 
     public Pelicula(String titulo, String tematica, String trailer, int idPelicula, int anio, int edadRecomendada, int butacasLibres, int butacasOcupadas, int calificacion, int vecesPuntuado) {
+        this.idPelicula = idPelicula;
         this.titulo = titulo;
         this.tematica = tematica;
         this.trailer = trailer;
-        this.idPelicula = idPelicula;
         this.anio = anio;
         this.edadRecomendada = edadRecomendada;
         this.butacasLibres = butacasLibres;

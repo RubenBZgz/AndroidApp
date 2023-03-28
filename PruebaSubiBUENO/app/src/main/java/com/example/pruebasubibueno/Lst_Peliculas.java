@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,6 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Lst_Peliculas extends AppCompatActivity {
+    public static final String EXTRA_ID = "com.example.application.example.EXTRA_ID";
+
     ListView superListView;
     TextView function;
     String data = "";
@@ -34,16 +37,19 @@ public class Lst_Peliculas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lst_peliculas);
 
+        Intent intent2 = new Intent(this, ficha_tecnica.class);
         superListView = findViewById(R.id.superListView);
 
-        /*superListView.setOnClickListener(new View.OnClickListener() {
+        superListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                //fichaTecnica();
-                Toast.makeText(Lst_Peliculas.this, "HAS LLEGADO", Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int idPeli = Integer.parseInt(String.valueOf(parent.getItemAtPosition(position)).substring(0,1));
+                Toast.makeText(Lst_Peliculas.this, "Me has clicado:  " + idPeli, Toast.LENGTH_SHORT).show();
+                intent2.putExtra(EXTRA_ID, String.valueOf(idPeli));
+                startActivity(intent2);
+                //findOne(idPeli);
             }
-        });*/
-
+        });
 
 
 
@@ -88,7 +94,8 @@ public class Lst_Peliculas extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
@@ -110,8 +117,10 @@ public class Lst_Peliculas extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                    unaPelicula[i] += "  Votos: " + peliculas.get(i).getVecesPuntuado();
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
             }
@@ -133,7 +142,8 @@ public class Lst_Peliculas extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
@@ -155,7 +165,8 @@ public class Lst_Peliculas extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
@@ -177,7 +188,8 @@ public class Lst_Peliculas extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
@@ -191,7 +203,7 @@ public class Lst_Peliculas extends AppCompatActivity {
         });
     }
 
-    private void fichaTecnica() {
+    private void fichaTecnica(int id) {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findAll();
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
@@ -212,4 +224,6 @@ public class Lst_Peliculas extends AppCompatActivity {
             }
         });
     }
+
+
 }

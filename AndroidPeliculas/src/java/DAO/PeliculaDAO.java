@@ -13,6 +13,9 @@ public class PeliculaDAO
 
     private final String SQL_FINDALL
             = "SELECT * FROM `pelicula` WHERE 1=1 ";
+    
+    private final String SQL_FIND_ONE
+            = "SELECT * FROM `pelicula` WHERE idPelicula=";
 
     private final String SQL_ADD
             = "INSERT INTO `pelicula` (`titulo`, `tematica`, `trailer`, `anio`, `edadRecomendada`, `butacasLibres`, `butacasOcupadas`, `calificacion`, `vecesPuntuado`) VALUES ";
@@ -87,6 +90,42 @@ public class PeliculaDAO
             System.out.println(sql);
             ResultSet rs = motorSql.
                     executeQuery(sql);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+
+                peliculas.add(pelicula);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
+    public ArrayList<Pelicula> findOne (int idPelicula) {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        String sql= SQL_FIND_ONE + idPelicula;
+        try {
+            //1º) 
+            motorSql.connect();
+            sql += ";";
+
+            System.out.println(sql);
+            ResultSet rs = motorSql.executeQuery(sql);
 
             while (rs.next()) {
                 Pelicula pelicula = new Pelicula();
@@ -413,16 +452,19 @@ public class PeliculaDAO
         //ArrayList lstPeliculas = peliculaDAO.findAll(new Pelicula("Interstellar", null, null, null, 0, 500, 0, 0, null, null));
         //System.out.println(lstPeliculas.toString());
         
-        /*      FILTRADO TITULO
-        ArrayList lstPeliculas = peliculaDAO.filtradoTitulo("ava");
+        ArrayList lstPeliculas = peliculaDAO.findOne(1);
+        System.out.println(lstPeliculas.toString());
+        
+        //     FILTRADO TITULO
+        /*ArrayList lstPeliculas = peliculaDAO.filtradoTitulo("ava");
         System.out.println(lstPeliculas.toString());*/
         
         /*      FILTRADO TEMATICAS
         ArrayList lstPeliculas = peliculaDAO.tematicas();
         System.out.println(lstPeliculas.toString());*/
         
-        ArrayList lstPeliculas = peliculaDAO.filtradoAmbas("Cre", "Acción");
-        System.out.println(lstPeliculas.toString());
+        /*ArrayList lstPeliculas = peliculaDAO.filtradoAmbas("Cre", "Acción");
+        System.out.println(lstPeliculas.toString());*/
         
         
         //Pelicula peliprueba = new Pelicula("Joshua y los teleñecos", "www", "abc", "2015", 90, 5, 6, 9, 5.3, null);

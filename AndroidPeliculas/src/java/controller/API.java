@@ -63,6 +63,16 @@ public class API {
     }
     
     @GET
+    @Path("/findOne/{idPelicula}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String findOne (@PathParam("idPelicula") int idPelicula) {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<Pelicula> peliculas = peliculaDAO.findOne(idPelicula);
+        return Pelicula.toArrayJSon(peliculas);
+    }
+    
+    @GET
     @Path("/top10")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

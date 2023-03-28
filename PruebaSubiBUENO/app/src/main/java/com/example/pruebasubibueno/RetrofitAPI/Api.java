@@ -23,6 +23,9 @@ public interface Api {
     @GET("findAll")
     Call<List<Peliculas>> findAll();
 
+    @GET("findOne/{idPelicula}")
+    Call<List<Peliculas>> findOne(@Path("idPelicula") int idPelicula);
+
     @GET("top10")
     Call<List<Peliculas>> top10();
 
