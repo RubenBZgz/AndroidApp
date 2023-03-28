@@ -6,6 +6,8 @@
 package controller;
 
 import DAO.PeliculaDAO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -79,6 +81,26 @@ public class API {
         ArrayList<Pelicula> peliculas = peliculaDAO.filtradoTitulo(titulo);
         return Pelicula.toArrayJSon(peliculas);
     }
+    
+    public static String toArrayJSon(ArrayList<String> tematicas) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        String resp = gson.toJson(tematicas);
+        //resp = "{\"data\":" + resp + "}";
+        return resp;
+    }
+    
+    @GET
+    @Path("/tematicas")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String tematicas () {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<String> tematicas = peliculaDAO.tematicas();
+        return toArrayJSon(tematicas);
+    }
+    
     
     @GET
     @Path("/historico")

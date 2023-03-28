@@ -25,4 +25,7 @@ public interface Api {
 
     @GET("top10")
     Call<List<Peliculas>> top10();
+
+    @GET("tematicas")
+    Call<List<String>> tematicas();
 }

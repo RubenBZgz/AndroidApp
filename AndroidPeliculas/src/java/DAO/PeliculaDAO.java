@@ -145,8 +145,9 @@ public class PeliculaDAO
         return peliculas;
     }
 
-    public ArrayList<Pelicula> tematicas () {
-        ArrayList<Pelicula> peliculas = new ArrayList<>();
+    public ArrayList<String> tematicas () {
+        //ArrayList<Pelicula> peliculas = new ArrayList<>();
+        ArrayList<String> tematicas = new ArrayList<>();
         String sql= SQL_TEMATICAS;
         try {
             //1º) 
@@ -157,28 +158,14 @@ public class PeliculaDAO
             ResultSet rs = motorSql.executeQuery(sql);
 
             while (rs.next()) {
-                Pelicula pelicula = new Pelicula();
-
-                pelicula.setIdPelicula(rs.getInt(1));
-                pelicula.setTitulo(rs.getString(2));
-                pelicula.setTematica(rs.getString(3));
-                pelicula.setTrailer(rs.getString(4));
-                pelicula.setAnio(rs.getInt(5));
-                pelicula.setEdadRecomendada(rs.getInt(6));
-                pelicula.setButacasLibres(rs.getInt(7));
-                pelicula.setButacasOcupadas(rs.getInt(8));
-                pelicula.setCalificacion(rs.getInt(9));
-                pelicula.setVecesPuntuado(rs.getInt(10));
-
-                peliculas.add(pelicula);
-
+                tematicas.add(rs.getString(1));
             }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             motorSql.disconnect();
         }
-        return peliculas;
+        return tematicas;
     }
     
     public ArrayList<Pelicula> filtradoTitulo (String titulo) {
@@ -348,18 +335,23 @@ public class PeliculaDAO
         //ArrayList lstPeliculas = peliculaDAO.findAll(new Pelicula("Interstellar", null, null, null, 0, 500, 0, 0, null, null));
         //System.out.println(lstPeliculas.toString());
         
+        /*      FILTRADO TITULO
         ArrayList lstPeliculas = peliculaDAO.filtradoTitulo("ava");
+        System.out.println(lstPeliculas.toString());*/
+        
+        ArrayList lstPeliculas = peliculaDAO.tematicas();
         System.out.println(lstPeliculas.toString());
-//
-//        Pelicula peliprueba = new Pelicula("Joshua y los teleñecos", "www", "abc", "2015", 90, 5, 6, 9, 5.3, null);
+        
+        
+        //Pelicula peliprueba = new Pelicula("Joshua y los teleñecos", "www", "abc", "2015", 90, 5, 6, 9, 5.3, null);
 
-//        //Add de registro
-       // peliculaDAO.add(peliprueba);
+       //Add de registro
+       //peliculaDAO.add(peliprueba);
 
-//        //Update del registro con id pelicula 1
-   //     peliculaDAO.update(new Pelicula("Titulo cambiado", null, null, null, 0, 0, 0, 1, null));
+        //Update del registro con id pelicula 1
+        //peliculaDAO.update(new Pelicula("Titulo cambiado", null, null, null, 0, 0, 0, 1, null));
 
-//        //Delete del registro 2
-   //     peliculaDAO.delete(2);
+        //Delete del registro 2
+        //peliculaDAO.delete(2);
     }
 }

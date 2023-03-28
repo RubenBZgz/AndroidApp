@@ -9,60 +9,75 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/findAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:text="findAll"
-        app:layout_constraintBottom_toBottomOf="@+id/top10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top10" />
-
-    <Button
         android:id="@+id/top10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="400dp"
-        android:text="TOP10"
+        android:layout_marginBottom="328dp"
+        android:text="@string/top10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/findAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/findall"
+        app:layout_constraintBottom_toBottomOf="@+id/top10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top10"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/historico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Historico"
+        android:layout_marginStart="4dp"
+        android:text="@string/historico"
         app:layout_constraintBottom_toBottomOf="@+id/top10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top10" />
+        app:layout_constraintTop_toTopOf="@+id/top10"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnFiltrarTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:text="Filtrar"
+        android:text="@string/filtrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/filtrarTitulo"
+        app:layout_constraintTop_toTopOf="@+id/filtrarTitulo" />
+
+    <Spinner
+        android:id="@+id/idSpinnerDias"
+        android:layout_width="208dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/filtrarTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Titulo"
+        android:text="@string/titulo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/idSpinnerDias"
+        android:autofillHints="" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
