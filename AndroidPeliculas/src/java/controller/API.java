@@ -52,6 +52,16 @@ public class API {
     }
     
     @GET
+    @Path("/tematicas")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String tematicas () {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<String> tematicas = peliculaDAO.tematicas();
+        return toArrayJSon(tematicas);
+    }
+    
+    @GET
     @Path("/findAll")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -112,24 +122,19 @@ public class API {
         return Pelicula.toArrayJSon(peliculas);
     }
     
-    public static String toArrayJSon(ArrayList<String> tematicas) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        Gson gson = builder.create();
-        String resp = gson.toJson(tematicas);
-        //resp = "{\"data\":" + resp + "}";
-        return resp;
-    }
-    
     @GET
-    @Path("/tematicas")
+    @Path("/puntuar/{idPelicula}/{puntuacion}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String tematicas () {
+    public String puntuar (@PathParam("idPelicula") int idPelicula, @PathParam("puntuacion") int puntuacion) {
         PeliculaDAO peliculaDAO = new PeliculaDAO();
-        ArrayList<String> tematicas = peliculaDAO.tematicas();
-        return toArrayJSon(tematicas);
+        ArrayList<Pelicula> peliculas = peliculaDAO.puntuar(idPelicula, puntuacion);
+        return Pelicula.toArrayJSon(peliculas);
     }
+    
+    
+    
+    
     
     
     @GET
@@ -138,7 +143,7 @@ public class API {
     @Produces(MediaType.APPLICATION_JSON)
     public String historico (String titulo) {
         PeliculaDAO peliculaDAO = new PeliculaDAO();
-        ArrayList<Pelicula> peliculas = peliculaDAO.filtradoTitulo(titulo);
+        ArrayList<Pelicula> peliculas = peliculaDAO.historico();
         return Pelicula.toArrayJSon(peliculas);
     }   
 
@@ -150,5 +155,14 @@ public class API {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
+    }
+    
+    public static String toArrayJSon(ArrayList<String> tematicas) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        String resp = gson.toJson(tematicas);
+        //resp = "{\"data\":" + resp + "}";
+        return resp;
     }
 }

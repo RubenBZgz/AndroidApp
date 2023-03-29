@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Pelicula {
 
-    private String titulo, tematica, trailer;
+    private String titulo, tematica, trailer, imagen;
     private int idPelicula, anio, edadRecomendada, butacasLibres, butacasOcupadas, calificacion, vecesPuntuado;
 
     public Pelicula(String titulo, String tematica, String trailer, int idPelicula, int anio, int edadRecomendada, int butacasLibres, int butacasOcupadas, int calificacion, int vecesPuntuado) {
@@ -33,6 +33,22 @@ public class Pelicula {
         this.calificacion = calificacion;
         this.vecesPuntuado = vecesPuntuado;
     }
+
+    public Pelicula(String titulo, String tematica, String trailer, String imagen, int idPelicula, int anio, int edadRecomendada, int butacasLibres, int butacasOcupadas, int calificacion, int vecesPuntuado) {
+        this.titulo = titulo;
+        this.tematica = tematica;
+        this.trailer = trailer;
+        this.imagen = imagen;
+        this.idPelicula = idPelicula;
+        this.anio = anio;
+        this.edadRecomendada = edadRecomendada;
+        this.butacasLibres = butacasLibres;
+        this.butacasOcupadas = butacasOcupadas;
+        this.calificacion = calificacion;
+        this.vecesPuntuado = vecesPuntuado;
+    }
+    
+    
 
     public Pelicula() {
     }
@@ -118,11 +134,28 @@ public class Pelicula {
         this.vecesPuntuado = vecesPuntuado;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    @Override
+    public String toString() {
+        return "Pelicula{" + "titulo=" + titulo + ", tematica=" + tematica + ", trailer=" + trailer + ", imagen=" + imagen + ", idPelicula=" + idPelicula + ", anio=" + anio + ", edadRecomendada=" + edadRecomendada + ", butacasLibres=" + butacasLibres + ", butacasOcupadas=" + butacasOcupadas + ", calificacion=" + calificacion + ", vecesPuntuado=" + vecesPuntuado + '}';
+    }
+    
+    
+
+    /*
     @Override
     public String toString() {
         return "Pelicula{" + "titulo=" + titulo + ", tematica=" + tematica + ", trailer=" + trailer + ", idPelicula=" + idPelicula + ", anio=" + anio + ", edadRecomendada=" + edadRecomendada + ", butacasLibres=" + butacasLibres + ", butacasOcupadas=" + butacasOcupadas + ", calificacion=" + calificacion + ", vecesPuntuado=" + vecesPuntuado + '}';
-    }
+    }/*
 
+    
     /*public static String toCadena(Pelicula pelicula) {
         return "Pelicula{" + 
                 "titulo=" + pelicula.getTitulo() + ", "

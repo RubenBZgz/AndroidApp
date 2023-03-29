@@ -41,4 +41,9 @@ public interface Api {
     @GET("filtrarAmbas/{titulo}/{tematica}")
     Call<List<Peliculas>> filtrarAmbas(@Path("titulo") String titulo, @Path("tematica") String tematica);
 
+    @GET("puntuar/{idPelicula}/{puntuacion}")
+    Call<List<Peliculas>> puntuar(@Path("idPelicula") int idPelicula, @Path("puntuacion") int puntuacion);
+
+    @GET("historico")
+    Call<List<Peliculas>> historico();
 }

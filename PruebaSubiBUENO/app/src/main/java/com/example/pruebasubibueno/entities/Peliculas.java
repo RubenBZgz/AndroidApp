@@ -33,6 +33,9 @@ public class Peliculas {
     @SerializedName("vecesPuntuado")
     private int vecesPuntuado;
 
+    @SerializedName("imagen")
+    private String imagen;
+
     public Peliculas() {
     }
 
@@ -47,6 +50,20 @@ public class Peliculas {
         this.butacasOcupadas = butacasOcupadas;
         this.calificacion = calificacion;
         this.vecesPuntuado = vecesPuntuado;
+    }
+
+    public Peliculas(int idPelicula, String titulo, String tematica, String trailer, int anio, int edadRecomendada, int butacasLibres, int butacasOcupadas, double calificacion, int vecesPuntuado, String imagen) {
+        this.idPelicula = idPelicula;
+        this.titulo = titulo;
+        this.tematica = tematica;
+        this.trailer = trailer;
+        this.anio = anio;
+        this.edadRecomendada = edadRecomendada;
+        this.butacasLibres = butacasLibres;
+        this.butacasOcupadas = butacasOcupadas;
+        this.calificacion = calificacion;
+        this.vecesPuntuado = vecesPuntuado;
+        this.imagen = imagen;
     }
 
     public int getIdPelicula() {
@@ -127,5 +144,13 @@ public class Peliculas {
 
     public void setVecesPuntuado(int vecesPuntuado) {
         this.vecesPuntuado = vecesPuntuado;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

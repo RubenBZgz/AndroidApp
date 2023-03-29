@@ -1,5 +1,7 @@
 package DAO;
 
+import static com.sun.media.jfxmediaimpl.MediaUtils.error;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 import interfaces.IDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +36,9 @@ public class PeliculaDAO
     
     private final String SQL_FILTRADO_AMBAS = "SELECT * FROM pelicula WHERE titulo LIKE ";
     
-    private final String SQL_HISTORICO = "";
+    private final String SQL_PUNTUAR = "UPDATE `pelicula` SET `calificacion` = ";
+    
+    private final String SQL_HISTORICO = "SELECT * FROM `pelicula` ORDER BY idPelicula ASC LIMIT 4;";
     //SELECT pelicula.titulo FROM pelicula, cpeli WHERE cpeli.idPelicula = pelicula.idPelicula;
     
     //SELECT pelicula.titulo, pelicula.tematica, pelicula.trailer, pelicula.anio, pelicula.edadRecomendada, pelicula.butacasLibres, pelicula.butacasOcupadas, pelicula.calificacion, pelicula.vecesPuntuado FROM pelicula, cpeli WHERE cpeli.idPelicula = pelicula.idPelicula AND pelicula.idPelicula = 1
@@ -140,6 +144,7 @@ public class PeliculaDAO
                 pelicula.setButacasOcupadas(rs.getInt(8));
                 pelicula.setCalificacion(rs.getInt(9));
                 pelicula.setVecesPuntuado(rs.getInt(10));
+                pelicula.setImagen(rs.getString(11));
 
                 peliculas.add(pelicula);
 
@@ -321,6 +326,111 @@ public class PeliculaDAO
         return peliculas;
     }
     
+    public ArrayList<Pelicula> puntuar (int idPelicula, int puntuacion) {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        
+        try {
+            //1º) 
+            motorSql.connect();
+            
+            //      OBTENER PELICULA PARA SACAR LAS VECES PUNTUADA Y SU CALIFICACION
+            /*ResultSet rs = motorSql.executeQuery(SQL_FIND_ONE + idPelicula);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+                pelicula.setImagen(rs.getString(11));
+
+                peliculas.add(pelicula);
+
+            }
+
+            double calificacion = peliculas.get(0).getCalificacion();
+            int vecesPuntuado = peliculas.get(0).getVecesPuntuado();
+            vecesPuntuado += 1;
+            double calificacionBuena = ((calificacion * vecesPuntuado+puntuacion)/vecesPuntuado);*/
+            
+            
+            String sql= SQL_PUNTUAR + puntuacion  + " WHERE `idPelicula` = " + idPelicula;
+            sql += ";";
+            System.out.println(sql);
+            int result = motorSql.execute(sql);
+            /*ResultSet rs = motorSql.executeQuery(sql);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+                pelicula.setImagen(rs.getString(11));
+
+                peliculas.add(pelicula);
+
+            }*/
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
+    public ArrayList<Pelicula> historico () {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        String sql= SQL_HISTORICO;
+        System.out.println(sql);
+        try {
+            //1º) 
+            motorSql.connect();
+            sql += ";";
+
+            System.out.println(sql);
+            ResultSet rs = motorSql.executeQuery(sql);
+
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+
+                pelicula.setIdPelicula(rs.getInt(1));
+                pelicula.setTitulo(rs.getString(2));
+                pelicula.setTematica(rs.getString(3));
+                pelicula.setTrailer(rs.getString(4));
+                pelicula.setAnio(rs.getInt(5));
+                pelicula.setEdadRecomendada(rs.getInt(6));
+                pelicula.setButacasLibres(rs.getInt(7));
+                pelicula.setButacasOcupadas(rs.getInt(8));
+                pelicula.setCalificacion(rs.getInt(9));
+                pelicula.setVecesPuntuado(rs.getInt(10));
+                pelicula.setImagen(rs.getString(11));
+
+                peliculas.add(pelicula);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
     @Override
     public int add(Pelicula bean) {
         int resp = 0;
@@ -452,8 +562,8 @@ public class PeliculaDAO
         //ArrayList lstPeliculas = peliculaDAO.findAll(new Pelicula("Interstellar", null, null, null, 0, 500, 0, 0, null, null));
         //System.out.println(lstPeliculas.toString());
         
-        ArrayList lstPeliculas = peliculaDAO.findOne(1);
-        System.out.println(lstPeliculas.toString());
+        /*ArrayList lstPeliculas = peliculaDAO.findOne(4);
+        System.out.println(lstPeliculas.toString());*/
         
         //     FILTRADO TITULO
         /*ArrayList lstPeliculas = peliculaDAO.filtradoTitulo("ava");
@@ -463,8 +573,16 @@ public class PeliculaDAO
         ArrayList lstPeliculas = peliculaDAO.tematicas();
         System.out.println(lstPeliculas.toString());*/
         
-        /*ArrayList lstPeliculas = peliculaDAO.filtradoAmbas("Cre", "Acción");
+        /*      FILTRADO AMBAS
+        ArrayList lstPeliculas = peliculaDAO.filtradoAmbas("Cre", "Acción");
         System.out.println(lstPeliculas.toString());*/
+        
+        /*      PUNTUAR
+        ArrayList lstPeliculas = peliculaDAO.puntuar(4, 4);
+        System.out.println(lstPeliculas.toString());*/
+        
+        ArrayList lstPeliculas = peliculaDAO.historico();
+        System.out.println(lstPeliculas.toString());
         
         
         //Pelicula peliprueba = new Pelicula("Joshua y los teleñecos", "www", "abc", "2015", 90, 5, 6, 9, 5.3, null);

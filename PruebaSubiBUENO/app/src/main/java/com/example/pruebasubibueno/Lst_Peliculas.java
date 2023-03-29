@@ -82,6 +82,9 @@ public class Lst_Peliculas extends AppCompatActivity {
                 function.setText(nombreTematica);
                 filtrarAmbas(nombrePelicula, nombreTematica);
                 break;
+            case "historico":
+                historico();
+                break;
         }
 
     }
@@ -111,6 +114,30 @@ public class Lst_Peliculas extends AppCompatActivity {
 
     private void top10() {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().top10();
+        call.enqueue(new Callback<List<Peliculas>>() {
+            @Override
+            public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
+                List<Peliculas> peliculas = response.body();
+                String[] unaPelicula = new String[peliculas.size()];
+                for (int i = 0; i < peliculas.size(); i++) {
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
+                    unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                    unaPelicula[i] += "  Votos: " + peliculas.get(i).getVecesPuntuado();
+                }
+                superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
+            }
+
+            @Override
+            public void onFailure(Call<List<Peliculas>> call, Throwable t) {
+                Log.d("Error:", String.valueOf(t));
+                Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void historico() {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().historico();
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
             public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
@@ -203,7 +230,7 @@ public class Lst_Peliculas extends AppCompatActivity {
         });
     }
 
-    private void fichaTecnica(int id) {
+    /*private void fichaTecnica(int id) {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findAll();
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
@@ -223,7 +250,7 @@ public class Lst_Peliculas extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
 
 }
