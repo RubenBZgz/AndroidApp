@@ -3,6 +3,8 @@ package com.example.pruebasubibueno;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ public class ficha_tecnica extends AppCompatActivity {
     String data = "";
     TextView fichaTitulo;
     TextView fichaAnio;
+    ImageView fichaImagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +43,17 @@ public class ficha_tecnica extends AppCompatActivity {
         String titulo = String.valueOf(fichaTitulo);
         fichaAnio = findViewById(R.id.fichaAnio);
         String anio = String.valueOf(fichaAnio);
+        fichaImagen = findViewById(R.id.fichaImagen);
+
+
 
         findOne(idPelicula);
 
+
     }
 
-    /*private void findOne(int idPelicula) {
+
+    private void findOne(int idPelicula) {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findOne(idPelicula);
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
@@ -53,10 +61,12 @@ public class ficha_tecnica extends AppCompatActivity {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
-                    unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                    fichaTitulo.setText(peliculas.get(i).getTitulo());
+                    fichaAnio.setText(peliculas.get(i).getAnio());
+                    //if (peliculas.get(i).get)
+                    //fichaImagen.
                 }
-                superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
+                //superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
             }
 
             @Override
@@ -65,26 +75,6 @@ public class ficha_tecnica extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
             }
         });
-    }*/
-
-    private Peliculas findOne(int idPelicula) {
-        Peliculas[] peli = {new Peliculas()};
-        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findOne(idPelicula);
-        call.enqueue(new Callback<List<Peliculas>>() {
-            @Override
-            public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
-                List<Peliculas> peliculas = response.body();
-                //String[] unaPelicula = new String[peliculas.size()];
-                peli[0] = peliculas.get(0);
-            }
-
-            @Override
-            public void onFailure(Call<List<Peliculas>> call, Throwable t) {
-                Log.d("Error:", String.valueOf(t));
-                Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
-            }
-        });
-        return peli[0];
     }
 
 
