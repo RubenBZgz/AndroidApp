@@ -55,6 +55,8 @@ public class Lst_Peliculas extends AppCompatActivity {
 
         Intent intent = getIntent();
         data = intent.getStringExtra(MainActivity.EXTRA_FUNCTION);
+
+
         function = (TextView) findViewById(R.id.data);
         //function.setText(data);
         //String data = function.toString();
@@ -84,6 +86,11 @@ public class Lst_Peliculas extends AppCompatActivity {
                 break;
             case "historico":
                 historico();
+                break;
+            case "peliculasCine":
+                String idPrueba2 = intent.getStringExtra(Lst_Peliculas.EXTRA_ID);
+                int idPrueba = Integer.parseInt(EXTRA_ID);
+                peliculasCine(idPrueba);
                 break;
         }
 
@@ -230,16 +237,18 @@ public class Lst_Peliculas extends AppCompatActivity {
         });
     }
 
-    /*private void fichaTecnica(int id) {
-        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findAll();
+    private void peliculasCine(int idPelicula) {
+        Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().peliculasCine(idPelicula);
         call.enqueue(new Callback<List<Peliculas>>() {
             @Override
             public void onResponse(Call<List<Peliculas>> call, Response<List<Peliculas>> response) {
                 List<Peliculas> peliculas = response.body();
                 String[] unaPelicula = new String[peliculas.size()];
                 for (int i = 0; i < peliculas.size(); i++) {
-                    unaPelicula[i] = peliculas.get(i).getTitulo();
+                    unaPelicula[i] = String.valueOf(peliculas.get(i).getIdPelicula());
+                    unaPelicula[i] += peliculas.get(i).getTitulo();
                     unaPelicula[i] += " (" + peliculas.get(i).getAnio() + ")";
+                    unaPelicula[i] += "  Votos: " + peliculas.get(i).getVecesPuntuado();
                 }
                 superListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, unaPelicula));
             }
@@ -250,7 +259,7 @@ public class Lst_Peliculas extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "An error has occured: " + t, Toast.LENGTH_LONG).show();
             }
         });
-    }*/
+    }
 
 
 }

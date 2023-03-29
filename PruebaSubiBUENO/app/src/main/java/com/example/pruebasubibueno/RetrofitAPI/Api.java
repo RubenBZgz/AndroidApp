@@ -46,4 +46,7 @@ public interface Api {
 
     @GET("historico")
     Call<List<Peliculas>> historico();
+
+    @GET("peliculasCine/{idPelicula}")
+    Call<List<Peliculas>> peliculasCine(@Path("idPelicula") int idPelicula);
 }

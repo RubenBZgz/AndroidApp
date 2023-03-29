@@ -1,5 +1,8 @@
 package com.example.pruebasubibueno;
 
+import static com.example.pruebasubibueno.Lst_Peliculas.EXTRA_ID;
+import static com.example.pruebasubibueno.MainActivity.EXTRA_FUNCTION;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ficha_tecnica extends AppCompatActivity {
+    //public static final String EXTRA_FUNCTION = "com.example.application.example.EXTRA_FUNCTION";
+    public static final String EXTRA_ID_FICHA = "com.example.application.example.EXTRA_ID_FICHA";
     private TextView function;
     private String data = "";
     private TextView fichaTitulo;
@@ -39,10 +44,10 @@ public class ficha_tecnica extends AppCompatActivity {
         setContentView(R.layout.ficha_tecnica);
 
         Intent intent = getIntent();
+        Intent intent2 = new Intent(this, Lst_Peliculas.class);
         //String idPelicula = intent.getStringExtra(Lst_Peliculas.EXTRA_ID);
         //Toast.makeText(this, idPelicula, Toast.LENGTH_SHORT).show();
-        int idPelicula = Integer.parseInt(intent.getStringExtra(Lst_Peliculas.EXTRA_ID));
-
+        int idPelicula = Integer.parseInt(intent.getStringExtra(EXTRA_ID));
 
         fichaTitulo = findViewById(R.id.fichaTitulo);
         String titulo = String.valueOf(fichaTitulo);
@@ -53,7 +58,7 @@ public class ficha_tecnica extends AppCompatActivity {
         fichaReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openActivityLstPeliculasCine("peliculasCine", idPelicula);
             }
         });
         fichaPuntuacion = findViewById(R.id.fichaPuntuacion);
@@ -66,10 +71,16 @@ public class ficha_tecnica extends AppCompatActivity {
         findOne(idPelicula);
 
 
-
-
     }
 
+    public void openActivityLstPeliculasCine(String metodo, int idPelicula) {
+        //EditText function = (EditText) findViewById(R.id.filtrarTitulo);
+        //String text = function.getText().toString();
+        Intent intent = new Intent(this, Lst_Peliculas.class);
+        intent.putExtra(EXTRA_FUNCTION, metodo);
+        intent.putExtra(EXTRA_ID_FICHA, idPelicula);
+        startActivity(intent);
+    }
 
     private void findOne(int idPelicula) {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().findOne(idPelicula);
@@ -102,7 +113,6 @@ public class ficha_tecnica extends AppCompatActivity {
         });
     }
 
-    // ESTO DE MOMENTO NO VA DEL TODO
     private void puntuar(int idPelicula, int calificacion) {
         Call<List<Peliculas>> call = RetrofitClient.getInstance().getMyApi().puntuar(idPelicula, calificacion);
         call.enqueue(new Callback<List<Peliculas>>() {

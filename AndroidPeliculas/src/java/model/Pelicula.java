@@ -174,6 +174,8 @@ public class Pelicula {
         //resp = "{\"data\":" + resp + "}";
         return resp;
     }
+    
+    
 
     public static String toObjectJSon(Pelicula pelicula) {
         GsonBuilder builder = new GsonBuilder();

@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import model.Pelicula;
+import model.cPeli;
 
 /**
  * REST Web Service
@@ -133,10 +134,6 @@ public class API {
     }
     
     
-    
-    
-    
-    
     @GET
     @Path("/historico")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -145,7 +142,19 @@ public class API {
         PeliculaDAO peliculaDAO = new PeliculaDAO();
         ArrayList<Pelicula> peliculas = peliculaDAO.historico();
         return Pelicula.toArrayJSon(peliculas);
-    }   
+    }
+    
+    @GET
+    @Path("/peliculasCine/{idPelicula}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String peliculasCine (@PathParam("idPelicula") int idPelicula) {
+        PeliculaDAO peliculaDAO = new PeliculaDAO();
+        ArrayList<cPeli> cPeliculas = peliculaDAO.peliculasCine(idPelicula);
+        return cPeli.toArrayJSon(cPeliculas);
+    }
+    
+    
 
     
     /**

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Pelicula;
+import model.cPeli;
 import utils.ConnectionFactory;
 import utils.MotorSQL;
 
@@ -39,6 +40,8 @@ public class PeliculaDAO
     private final String SQL_PUNTUAR = "UPDATE `pelicula` SET `calificacion` = ";
     
     private final String SQL_HISTORICO = "SELECT * FROM `pelicula` ORDER BY idPelicula ASC LIMIT 4;";
+    
+    private final String SQL_PELICULAS_CINE = "SELECT cine.nombre, pelicula.titulo FROM cine, cpeli, pelicula WHERE pelicula.idPelicula = cpeli.idPelicula AND cine.idCine = cpeli.idCine AND pelicula.idPelicula = ";
     //SELECT pelicula.titulo FROM pelicula, cpeli WHERE cpeli.idPelicula = pelicula.idPelicula;
     
     //SELECT pelicula.titulo, pelicula.tematica, pelicula.trailer, pelicula.anio, pelicula.edadRecomendada, pelicula.butacasLibres, pelicula.butacasOcupadas, pelicula.calificacion, pelicula.vecesPuntuado FROM pelicula, cpeli WHERE cpeli.idPelicula = pelicula.idPelicula AND pelicula.idPelicula = 1
@@ -431,6 +434,33 @@ public class PeliculaDAO
         return peliculas;
     }
     
+    public ArrayList<cPeli> peliculasCine (int idPelicula) {
+        ArrayList<cPeli> peliculas = new ArrayList<>();
+        String sql= SQL_PELICULAS_CINE + idPelicula;
+        try {
+            //1º) 
+            motorSql.connect();
+            sql += ";";
+
+            System.out.println(sql);
+            ResultSet rs = motorSql.executeQuery(sql);
+
+            while (rs.next()) {
+                cPeli cPeli = new cPeli();
+                cPeli.setNombreCine(rs.getString(1));
+                cPeli.setNombrePelicula(rs.getString(2));
+
+                peliculas.add(cPeli);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            motorSql.disconnect();
+        }
+        return peliculas;
+    }
+    
     @Override
     public int add(Pelicula bean) {
         int resp = 0;
@@ -581,7 +611,11 @@ public class PeliculaDAO
         ArrayList lstPeliculas = peliculaDAO.puntuar(4, 4);
         System.out.println(lstPeliculas.toString());*/
         
+        /*      HISTORICO
         ArrayList lstPeliculas = peliculaDAO.historico();
+        System.out.println(lstPeliculas.toString());*/
+        
+        ArrayList lstPeliculas = peliculaDAO.peliculasCine(4);
         System.out.println(lstPeliculas.toString());
         
         
