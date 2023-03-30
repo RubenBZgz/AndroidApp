@@ -3,6 +3,7 @@ package com.example.pruebasubibueno;
 import static com.example.pruebasubibueno.Lst_Peliculas.EXTRA_ID;
 import static com.example.pruebasubibueno.MainActivity.EXTRA_FUNCTION;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +69,18 @@ public class ficha_tecnica extends AppCompatActivity {
                         .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // Código para reservar la película
+
+                                // Código para enviar el correo electrónico
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.setType("text/plain");
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a22442@svalero.com" });
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Reserva de película");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, "Se ha reservado la película.");
+                                try {
+                                    startActivity(Intent.createChooser(emailIntent, "Enviar correo electrónico..."));
+                                } catch (ActivityNotFoundException ex) {
+                                    Toast.makeText(ficha_tecnica.this, "No hay aplicaciones de correo electrónico instaladas.", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
