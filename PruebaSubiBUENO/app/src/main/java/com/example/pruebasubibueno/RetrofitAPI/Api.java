@@ -1,6 +1,7 @@
 package com.example.pruebasubibueno.RetrofitAPI;
 
 import com.example.pruebasubibueno.entities.Peliculas;
+import com.example.pruebasubibueno.entities.cPeli;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public interface Api {
 
     //String BASE_URL = "http://localhost:8080/AndroidPeliculas/webresources/api/";
     //          CLASE
-    String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
+    //String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
     //          CASA
-    //String BASE_URL = "http://192.168.0.31:8080/AndroidPeliculas/webresources/api/";
+    String BASE_URL = "http://192.168.0.31:8080/AndroidPeliculas/webresources/api/";
     @GET("findAll")
     Call<List<Peliculas>> findAll();
 
@@ -48,5 +49,5 @@ public interface Api {
     Call<List<Peliculas>> historico();
 
     @GET("peliculasCine/{idPelicula}")
-    Call<List<Peliculas>> peliculasCine(@Path("idPelicula") int idPelicula);
+    Call<List<cPeli>> peliculasCine(@Path("idPelicula") int idPelicula);
 }

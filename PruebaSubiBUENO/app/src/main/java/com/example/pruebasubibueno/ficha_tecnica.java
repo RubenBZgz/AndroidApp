@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import com.bumptech.glide.Glide;
 import com.example.pruebasubibueno.RetrofitAPI.RetrofitClient;
 import com.example.pruebasubibueno.entities.Peliculas;
@@ -78,7 +79,7 @@ public class ficha_tecnica extends AppCompatActivity {
         //String text = function.getText().toString();
         Intent intent = new Intent(this, Lst_Peliculas.class);
         intent.putExtra(EXTRA_FUNCTION, metodo);
-        intent.putExtra(EXTRA_ID_FICHA, idPelicula);
+        intent.putExtra("EXTRA_ID_FICHA", idPelicula);
         startActivity(intent);
     }
 
