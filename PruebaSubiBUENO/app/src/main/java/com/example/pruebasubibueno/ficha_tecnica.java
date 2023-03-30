@@ -38,6 +38,7 @@ public class ficha_tecnica extends AppCompatActivity {
     private String data = "";
     private TextView fichaTitulo;
     private TextView fichaAnio;
+    private TextView fichaTematica;
     private ImageView fichaImagen;
     private Button fichaReservar;
     private RatingBar fichaPuntuacion;
@@ -57,6 +58,8 @@ public class ficha_tecnica extends AppCompatActivity {
         String titulo = String.valueOf(fichaTitulo);
         fichaAnio = findViewById(R.id.fichaAnio);
         String anio = String.valueOf(fichaAnio);
+        fichaTematica = findViewById(R.id.fichaTematica);
+        String fichaTematica = String.valueOf(R.id.fichaTematica);
         fichaImagen = findViewById(R.id.fichaImagen);
         fichaReservar = findViewById(R.id.fichaReservar);
         fichaReservar.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +76,7 @@ public class ficha_tecnica extends AppCompatActivity {
                                 // Código para enviar el correo electrónico
                                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                                 emailIntent.setType("text/plain");
-                                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "a22442@svalero.com" });
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "tuCineDeConfianza@gmail.com" });
                                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Reserva de película");
                                 emailIntent.putExtra(Intent.EXTRA_TEXT, "Se ha reservado la película.");
                                 try {
@@ -123,6 +126,7 @@ public class ficha_tecnica extends AppCompatActivity {
                     fichaTitulo.setText(peliculas.get(i).getTitulo());
                     fichaAnio.setText(String.valueOf(peliculas.get(i).getAnio()));
                     fichaPuntuacion.setRating((float) peliculas.get(i).getCalificacion());
+                    fichaTematica.setText(String.valueOf(peliculas.get(i).getTematica()));
                     String img = peliculas.get(i).getImagen();
                     if (peliculas.get(i).getImagen() != null || peliculas.get(i).getImagen() != ""){
                         Glide.with(ficha_tecnica.this).load(peliculas.get(i).getImagen()).into(fichaImagen);

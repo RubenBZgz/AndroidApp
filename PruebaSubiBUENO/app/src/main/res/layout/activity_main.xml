@@ -9,18 +9,8 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/top10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="328dp"
-        android:text="@string/top10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/findAll"
+        android:backgroundTint="@color/red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -32,6 +22,7 @@
 
     <Button
         android:id="@+id/historico"
+        android:backgroundTint="@color/red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -42,47 +33,48 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnFiltrarTitulo"
+        android:id="@+id/btnFiltrarAmbas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/titulo"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/filtrar_ambas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/filtrarTitulo"
-        app:layout_constraintTop_toBottomOf="@+id/btnFiltrarTematica"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFiltrarTitulo" />
 
     <Button
         android:id="@+id/btnFiltrarTematica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="@color/red"
         android:text="@string/tematica"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toEndOf="@+id/idSpinnerDias"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnFiltrarAmbas"
+        android:id="@+id/btnFiltrarTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/filtrar_ambas"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/yellow"
+        android:text="@string/titulo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.33"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filtrarTitulo" />
+        app:layout_constraintHorizontal_bias="0.618"
+        app:layout_constraintStart_toEndOf="@+id/filtrarTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/btnFiltrarTematica"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Spinner
         android:id="@+id/idSpinnerDias"
         android:layout_width="210dp"
         android:layout_height="48dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,16 +82,39 @@
         android:id="@+id/filtrarTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="@string/titulo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idSpinnerDias" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="208dp"
+        android:layout_height="167dp"
+        android:layout_marginStart="9dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_foreground"
+        tools:layout_editor_absoluteY="301dp" />
+
+    <Button
+        android:id="@+id/top10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="212dp"
+        android:backgroundTint="@color/yellow"
+        android:text="@string/top10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
