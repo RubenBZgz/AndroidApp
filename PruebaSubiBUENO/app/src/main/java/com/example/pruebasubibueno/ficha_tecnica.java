@@ -3,6 +3,7 @@ package com.example.pruebasubibueno;
 import static com.example.pruebasubibueno.Lst_Peliculas.EXTRA_ID;
 import static com.example.pruebasubibueno.MainActivity.EXTRA_FUNCTION;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -59,7 +61,23 @@ public class ficha_tecnica extends AppCompatActivity {
         fichaReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivityLstPeliculasCine("peliculasCine", idPelicula);
+                //openActivityLstPeliculasCine("peliculasCine", idPelicula);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ficha_tecnica.this);
+                builder.setMessage("¿Está seguro de que desea reservar esta película?")
+                        .setCancelable(false)
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Código para reservar la película
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Código para cerrar el diálogo
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
         fichaPuntuacion = findViewById(R.id.fichaPuntuacion);
@@ -70,8 +88,6 @@ public class ficha_tecnica extends AppCompatActivity {
         });
 
         findOne(idPelicula);
-
-
     }
 
     public void openActivityLstPeliculasCine(String metodo, int idPelicula) {

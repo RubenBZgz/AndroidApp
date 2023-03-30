@@ -18,9 +18,9 @@ public interface Api {
 
     //String BASE_URL = "http://localhost:8080/AndroidPeliculas/webresources/api/";
     //          CLASE
-    //String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
+    String BASE_URL = "http://192.168.104.53:8080/AndroidPeliculas/webresources/api/";
     //          CASA
-    String BASE_URL = "http://192.168.0.31:8080/AndroidPeliculas/webresources/api/";
+    //String BASE_URL = "http://192.168.0.31:8080/AndroidPeliculas/webresources/api/";
     @GET("findAll")
     Call<List<Peliculas>> findAll();
 
